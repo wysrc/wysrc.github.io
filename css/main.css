@@ -189,7 +189,7 @@ body {
   font-size: 14px;
   line-height: 2;
   color: #555;
-  background: #eee;
+  background: #fff;
 }
 @media (max-width: 767px) {
   body {
@@ -1823,7 +1823,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #40e7bf;
+  background: #ee2fff;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2353,7 +2353,7 @@ pre .javascript .function {
 .site-uv .busuanzi-value,
 .site-pv .busuanzi-value,
 .page-pv .busuanzi-value {
-  margin: 0 5px;
+  margin: 0;
 }
 .site-uv {
   margin-right: 10px;
@@ -2606,7 +2606,7 @@ pre .javascript .function {
   overflow: hidden;
   padding: 0;
   width: 240px;
-  background: #fff;
+  background: rgba(255,255,255,0.3);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
   border-radius: initial;
 }
@@ -2690,7 +2690,7 @@ pre .javascript .function {
   float: left;
   margin-top: 300px;
   width: 240px;
-  background: #eee;
+  background: #fff;
   box-shadow: none;
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -2847,10 +2847,9 @@ pre .javascript .function {
   box-sizing: border-box;
   width: 240px;
   color: #555;
-  background: #fff;
+  background: rgba(255,255,255,0.3);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   border-radius: initial;
-  opacity: 0;
 }
 .sidebar-inner.affix {
   position: fixed;
@@ -2984,7 +2983,7 @@ pre .javascript .function {
 }
 .post-block {
   padding: 40px;
-  background: #fff;
+  background: rgba(255,255,255,0.3);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
   border-radius: initial;
 }
@@ -2997,7 +2996,7 @@ pre .javascript .function {
   padding: 40px;
   margin: initial;
   margin-top: 12px;
-  background: #fff;
+  background: rgba(255,255,255,0.3);
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   border-radius: initial;
 }
@@ -3046,15 +3045,15 @@ pre .javascript .function {
 }
 .post-body h1 {
   font-size: 1.6em;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #fff;
 }
 .post-body h2 {
   font-size: 1.45em;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #fff;
 }
 .post-body h3 {
   font-size: 1.3em;
-  border-bottom: 1px dotted #eee;
+  border-bottom: 1px dotted #fff;
 }
 .post-body h4 {
   font-size: 1.2em;
