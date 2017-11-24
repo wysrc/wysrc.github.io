@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="Bonfire">
 <meta property="og:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 在线地图上浏览点数据最常见的应用需求之一，众多JS库(Leaflet、Openlayers、Mapbox、Mapzen、CARTO等等)都可以很轻松地实现。然而，但点数据规模达到一定程度后，直接对每个点进行渲染是不现实的，尤其是在点数据集达到百万级以上的时候。 Mapbox GL JS提供了point clustering功">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-23T14:24:35.314Z">
+<meta property="og:updated_time" content="2017-11-24T05:20:46.405Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用Supercluster实现百万级点数据聚类可视化">
 <meta name="twitter:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 在线地图上浏览点数据最常见的应用需求之一，众多JS库(Leaflet、Openlayers、Mapbox、Mapzen、CARTO等等)都可以很轻松地实现。然而，但点数据规模达到一定程度后，直接对每个点进行渲染是不现实的，尤其是在点数据集达到百万级以上的时候。 Mapbox GL JS提供了point clustering功">
@@ -392,35 +392,10 @@
 <p>为了使上述两类操作更加高效地完成，我们必须使用<a href="https://en.wikipedia.org/wiki/Spatial_database#Spatial_index" target="_blank" rel="external">空间索引</a>，将点数据集一次性地组织为特定的数据结构，之后就能实现任意数量的实时查询。</p>
 <p>空间索引是许多算法必不可少的部分，所以已经出现许多JavaScript库实现了快速空间索引，比如<a href="https://github.com/mourner/rbush" target="_blank" rel="external">RBush</a>。</p>
 <p>虽然在每个缩放级别都需要对点数据集建立一次索引，但是这样可以在任意缩放级别都实现实时查询与浏览。</p>
-<h3 id="聚类性能实验"><a href="#聚类性能实验" class="headerlink" title="聚类性能实验"></a>聚类性能实验</h3><p>下面是对400,000个点进行聚类的实验结果：</p>
-<pre><code>399601 points prepared in 123ms
-z16: indexed in 516ms clustered in 156ms 46805 clusters
-z15: indexed in 53.4ms clustered in 40.8ms 20310 clusters
-z14: indexed in 12.4ms clustered in 17.2ms 10632 clusters
-z13: indexed in 7.9ms clustered in 12.9ms 6578 clusters
-z12: indexed in 3.4ms clustered in 6.9ms 4514 clusters
-z11: indexed in 2.4ms clustered in 3.4ms 3252 clusters
-z10: indexed in 1.4ms clustered in 2.3ms 2329 clusters
- z9: indexed in 1ms clustered in 1.5ms 1608 clusters
- z8: indexed in 0.6ms clustered in 1.5ms 1083 clusters
- z7: indexed in 0.4ms clustered in 0.7ms 721 clusters
- z6: indexed in 0.2ms clustered in 0.4ms 421 clusters
- z5: indexed in 0.1ms clustered in 0.2ms 202 clusters
- z4: indexed in 0.1ms clustered in 0.1ms 82 clusters
- z3: indexed in 0ms clustered in 0ms 34 clusters
- z2: indexed in 0ms clustered in 0ms 14 clusters
- z1: indexed in 0ms clustered in 0ms 7 clusters
- z0: indexed in 0ms clustered in 0ms 3 clusters
-total time: 972ms
-</code></pre><p>Supercluster在1s内就完成了该数据集的聚类处理。而且使用<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="external">Web Worker</a>来完成该处理过程的话，不会影响地图渲染速度。但聚类完成后，任何范围查询都可实时完成(1ms内)。</p>
-<h3 id="Supercluster使用方法"><a href="#Supercluster使用方法" class="headerlink" title="Supercluster使用方法"></a>Supercluster使用方法</h3><p>Supercluster API很简洁：</p>
-<pre><code>// cluster GeoJSON points
-var index = supercluster({radius: 40, maxZoom: 16}).load(geojson.features);
-// get GeoJSON clusters given a bounding box and zoom
-var clusters = index.getClusters([-180, -85, 180, 85], 2);
-// get a JSON vector tile in the same format as GeoJSON-VT
-var tile = index.getTile(7, 523, 125);
-</code></pre><p>由于Supercluster在Mapbox GL JS中表现出来的性能非常好，官方很大方地将其发布为一个独立的JavaScript库，以便于其它软件充分发挥该库的作用。</p>
+<h3 id="聚类性能实验"><a href="#聚类性能实验" class="headerlink" title="聚类性能实验"></a>聚类性能实验</h3><p>下面是对400,000个点进行聚类的实验结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">399601 points prepared in 123ms</div><div class="line">z16: indexed in 516ms clustered in 156ms 46805 clusters</div><div class="line">z15: indexed in 53.4ms clustered in 40.8ms 20310 clusters</div><div class="line">z14: indexed in 12.4ms clustered in 17.2ms 10632 clusters</div><div class="line">z13: indexed in 7.9ms clustered in 12.9ms 6578 clusters</div><div class="line">z12: indexed in 3.4ms clustered in 6.9ms 4514 clusters</div><div class="line">z11: indexed in 2.4ms clustered in 3.4ms 3252 clusters</div><div class="line">z10: indexed in 1.4ms clustered in 2.3ms 2329 clusters</div><div class="line"> z9: indexed in 1ms clustered in 1.5ms 1608 clusters</div><div class="line"> z8: indexed in 0.6ms clustered in 1.5ms 1083 clusters</div><div class="line"> z7: indexed in 0.4ms clustered in 0.7ms 721 clusters</div><div class="line"> z6: indexed in 0.2ms clustered in 0.4ms 421 clusters</div><div class="line"> z5: indexed in 0.1ms clustered in 0.2ms 202 clusters</div><div class="line"> z4: indexed in 0.1ms clustered in 0.1ms 82 clusters</div><div class="line"> z3: indexed in 0ms clustered in 0ms 34 clusters</div><div class="line"> z2: indexed in 0ms clustered in 0ms 14 clusters</div><div class="line"> z1: indexed in 0ms clustered in 0ms 7 clusters</div><div class="line"> z0: indexed in 0ms clustered in 0ms 3 clusters</div><div class="line">total time: 972ms</div></pre></td></tr></table></figure></p>
+<p>Supercluster在1s内就完成了该数据集的聚类处理。而且使用<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers" target="_blank" rel="external">Web Worker</a>来完成该处理过程的话，不会影响地图渲染速度。但聚类完成后，任何范围查询都可实时完成(1ms内)。</p>
+<h3 id="Supercluster使用方法"><a href="#Supercluster使用方法" class="headerlink" title="Supercluster使用方法"></a>Supercluster使用方法</h3><p>Supercluster API很简洁：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// cluster GeoJSON points</span></div><div class="line"><span class="keyword">var</span> index = supercluster(&#123;<span class="attr">radius</span>: <span class="number">40</span>, <span class="attr">maxZoom</span>: <span class="number">16</span>&#125;).load(geojson.features);</div><div class="line"><span class="comment">// get GeoJSON clusters given a bounding box and zoom</span></div><div class="line"><span class="keyword">var</span> clusters = index.getClusters([<span class="number">-180</span>, <span class="number">-85</span>, <span class="number">180</span>, <span class="number">85</span>], <span class="number">2</span>);</div><div class="line"><span class="comment">// get a JSON vector tile in the same format as GeoJSON-VT</span></div><div class="line"><span class="keyword">var</span> tile = index.getTile(<span class="number">7</span>, <span class="number">523</span>, <span class="number">125</span>);</div></pre></td></tr></table></figure></p>
+<p>由于Supercluster在Mapbox GL JS中表现出来的性能非常好，官方很大方地将其发布为一个独立的JavaScript库，以便于其它软件充分发挥该库的作用。</p>
 <p>此外，也可以使用<a href="https://nodejs.org/" target="_blank" rel="external">Node.js</a>在服务器端进行聚类处理，然后通过<a href="https://twitter.com/anandthakker" target="_blank" rel="external">Anand Thakker</a>开发的<a href="https://github.com/anandthakker/vt-pbf" target="_blank" rel="external">vt-pbf module</a>，将聚类结果转换为Mapbox矢量瓦片。</p>
 <p>实际上，Supercluster也就300多行代码，是很好的学习素材。</p>
 
