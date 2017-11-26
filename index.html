@@ -367,9 +367,6 @@
 <p>在线地图上浏览点数据最常见的应用需求之一，众多JS库(Leaflet、Openlayers、Mapbox、Mapzen、CARTO等等)都可以很轻松地实现。然而，但点数据规模达到一定程度后，直接对每个点进行渲染是不现实的，尤其是在点数据集达到百万级以上的时候。</p>
 <p>Mapbox GL JS提供了<a href="https://www.mapbox.com/mapbox-gl-js/example/cluster/" target="_blank" rel="external">point clustering</a>功能，可使浏览器迅速完成400,000点数据的处理：</p>
 <img src="/2017/11/23/supercluster/Clustering-400k-points-with-Mapbox-GL-JS.gif" title="使用Mapbox GL JS实现40万点聚类">
-<p>通过样式修改，还可将其转化为热力图表达：</p>
-<img src="/2017/11/23/supercluster/400k-points-heatmap-in-Mapbox-GL-JS.gif" title="使用Mapbox GL JS生成40万点热力图">
-<p>在这项功能背后，是一个名为<a href="https://github.com/mapbox/supercluster" target="_blank" rel="external">Supercluster</a>的JavaScript聚类库，下面将该库的实现思路进行介绍。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/23/supercluster/#more" rel="contents">
