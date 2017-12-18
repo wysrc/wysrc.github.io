@@ -66,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JavaScript,Mapbox,矢量瓦片," />
 
 
 
@@ -77,16 +77,18 @@
 
 
 
-<meta name="description" content="May the flame guide thee.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Bonfire">
-<meta property="og:url" content="http://wysrc.github.io/index.html">
+<meta name="description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
+<meta name="keywords" content="JavaScript,Mapbox,矢量瓦片">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片">
+<meta property="og:url" content="http://wysrc.github.io/2017/12/18/geojson-vt/index.html">
 <meta property="og:site_name" content="Bonfire">
-<meta property="og:description" content="May the flame guide thee.">
+<meta property="og:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-18T12:57:57.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bonfire">
-<meta name="twitter:description" content="May the flame guide thee.">
+<meta name="twitter:title" content="基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片">
+<meta name="twitter:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
 
 
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://wysrc.github.io/"/>
+  <link rel="canonical" href="http://wysrc.github.io/2017/12/18/geojson-vt/"/>
 
 
 
 
 
-  <title>Bonfire</title>
+  <title>基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片 | Bonfire</title>
   
 
 
@@ -141,8 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,9 +246,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -277,9 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/18/geojson-vt/" itemprop="url">基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片</a></h1>
+          <h1 class="post-title" itemprop="name headline">基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片</h1>
         
 
         <div class="post-meta">
@@ -344,6 +343,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ><i class="fa fa-spinner fa-spin"></i></span>次
+            </span>
+          
 
           
 
@@ -362,9 +366,7 @@
       
 
       
-        
-          
-            <p>本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以<a href="https://blog.mapbox.com/rendering-big-geodata-on-the-fly-with-geojson-vt-4e4d2a5dd1f2" target="_blank" rel="external">点击此处</a>浏览原文。</p>
+        <p>本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以<a href="https://blog.mapbox.com/rendering-big-geodata-on-the-fly-with-geojson-vt-4e4d2a5dd1f2" target="_blank" rel="external">点击此处</a>浏览原文。</p>
 <p>GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。</p>
 <p>下面是一个简单的例子。使用<a href="http://github.com/mapbox/mapbox-gl-js" target="_blank" rel="external">Mapbox GL JS</a>可以在数秒内完成全美邮政边界的GeoJSON文件(106 MB)加载，该文件包含33,000多个Feature，涉及超过5,400,000个点。整个加载过程不需要依赖后台服务器，直接在浏览器中完成。</p>
 <p>可以看到整个浏览体验是很平滑的，那么到底是如何实现的呢？</p>
@@ -432,8 +434,6 @@
 <p>当然，对于其他应用，也可以手动借助API进行使用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tileIndex = geojsonvt(data);</div><div class="line">...</div><div class="line"><span class="keyword">var</span> tile = tileIndex.getTile(z, x, y);</div></pre></td></tr></table></figure></p>
 <p>输出的结果就是矢量瓦片，可以轻松完成渲染。</p>
 
-          
-        
       
     </div>
     
@@ -445,177 +445,61 @@
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Wang Yuan
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://wysrc.github.io/2017/12/18/geojson-vt/" title="基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片">http://wysrc.github.io/2017/12/18/geojson-vt/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://wysrc.github.io/2017/11/23/supercluster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wang Yuan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/oscar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Bonfire">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/supercluster/" itemprop="url">利用Supercluster实现百万级点数据的实时聚类可视化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T22:15:22+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Front-End/" itemprop="url" rel="index">
-                    <span itemprop="name">Front End</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
-
+            <a href="/tags/Mapbox/" rel="tag"># Mapbox</a>
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/23/supercluster/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/23/supercluster/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
+            <a href="/tags/矢量瓦片/" rel="tag"># 矢量瓦片</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <p>本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以<a href="https://blog.mapbox.com/clustering-millions-of-points-on-a-map-with-supercluster-272046ec5c97" target="_blank" rel="external">点击此处</a>浏览原文。</p>
-<p>在线地图上浏览点数据最常见的应用需求之一，众多JS库(Leaflet、Openlayers、Mapbox、Mapzen、CARTO等等)都可以很轻松地实现。然而，但点数据规模达到一定程度后，直接对每个点进行渲染是不现实的，尤其是在点数据集达到百万级以上的时候。</p>
-<p>Mapbox GL JS提供了<a href="https://www.mapbox.com/mapbox-gl-js/example/cluster/" target="_blank" rel="external">point clustering</a>功能，可使浏览器迅速完成400,000点数据的处理：</p>
-<img src="/2017/11/23/supercluster/Clustering-400k-points-with-Mapbox-GL-JS.gif" title="使用Mapbox GL JS实现40万点聚类">
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/23/supercluster/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/supercluster/" rel="next" title="利用Supercluster实现百万级点数据的实时聚类可视化">
+                <i class="fa fa-chevron-left"></i> 利用Supercluster实现百万级点数据的实时聚类可视化
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -625,10 +509,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -636,6 +521,20 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -656,8 +555,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -749,6 +657,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#矢量瓦片"><span class="nav-number">1.</span> <span class="nav-text">矢量瓦片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GeoJSON-VT工作原理"><span class="nav-number">2.</span> <span class="nav-text">GeoJSON-VT工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#预处理"><span class="nav-number">2.1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#瓦片分割"><span class="nav-number">2.2.</span> <span class="nav-text">瓦片分割</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态分割"><span class="nav-number">2.3.</span> <span class="nav-text">动态分割</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试与性能分析"><span class="nav-number">3.</span> <span class="nav-text">调试与性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#平滑渲染"><span class="nav-number">4.</span> <span class="nav-text">平滑渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用GeoJSON-VT"><span class="nav-number">5.</span> <span class="nav-text">使用GeoJSON-VT</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -916,6 +840,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -933,6 +861,18 @@
       <script id="dsq-count-scr" src="https://wysrc.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://wysrc.github.io/2017/12/18/geojson-vt/';
+          this.page.identifier = '2017/12/18/geojson-vt/';
+          this.page.title = '基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wysrc.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
