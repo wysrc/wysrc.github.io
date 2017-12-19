@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="Bonfire">
 <meta property="og:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T12:57:57.123Z">
+<meta property="og:updated_time" content="2017-12-19T13:47:28.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片">
 <meta name="twitter:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
@@ -369,6 +369,7 @@
         <p>本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以<a href="https://blog.mapbox.com/rendering-big-geodata-on-the-fly-with-geojson-vt-4e4d2a5dd1f2" target="_blank" rel="external">点击此处</a>浏览原文。</p>
 <p>GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。</p>
 <p>下面是一个简单的例子。使用<a href="http://github.com/mapbox/mapbox-gl-js" target="_blank" rel="external">Mapbox GL JS</a>可以在数秒内完成全美邮政边界的GeoJSON文件(106 MB)加载，该文件包含33,000多个Feature，涉及超过5,400,000个点。整个加载过程不需要依赖后台服务器，直接在浏览器中完成。</p>
+<a id="more"></a>
 <p>可以看到整个浏览体验是很平滑的，那么到底是如何实现的呢？</p>
 <h3 id="矢量瓦片"><a href="#矢量瓦片" class="headerlink" title="矢量瓦片"></a>矢量瓦片</h3><p>对于这么大的数据量，显然不可能对所有数据实现60 FPS的渲染，但实际上也没有必要这样做，因为：</p>
 <ul>
