@@ -85,10 +85,16 @@
 <meta property="og:site_name" content="Bonfire">
 <meta property="og:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-19T13:47:28.506Z">
+<meta property="og:image" content="http://wysrc.github.io/2017/12/18/geojson-vt/Ramer-Douglas-Peucker-simplification-algorithm.gif">
+<meta property="og:image" content="http://wysrc.github.io/2017/12/18/geojson-vt/Sutherland-Hodgeman.png">
+<meta property="og:image" content="http://wysrc.github.io/2017/12/18/geojson-vt/modified-half-plane-clipping-algorithm.png">
+<meta property="og:image" content="http://wysrc.github.io/2017/12/18/geojson-vt/debug.gif">
+<meta property="og:image" content="http://wysrc.github.io/2017/12/18/geojson-vt/web-worker.png">
+<meta property="og:updated_time" content="2017-12-20T06:24:39.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于GeoJSON-VT动态生成大规模GeoJSON文件的矢量瓦片">
 <meta name="twitter:description" content="本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以点击此处浏览原文。 GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。 下面是一个简单的例子。使用Mapbox GL JS可">
+<meta name="twitter:image" content="http://wysrc.github.io/2017/12/18/geojson-vt/Ramer-Douglas-Peucker-simplification-algorithm.gif">
 
 
 
@@ -369,6 +375,7 @@
         <p>本文主要内容来自Mapbox官方博客，感兴趣的童鞋可以<a href="https://blog.mapbox.com/rendering-big-geodata-on-the-fly-with-geojson-vt-4e4d2a5dd1f2" target="_blank" rel="external">点击此处</a>浏览原文。</p>
 <p>GeoJSON作为JSON在地理空间领域的扩展格式，已经在各类Web应用中广泛使用。对于少量数据而言，直接调用Leaflet、Openlayers等地图应用库的原生API进行渲染并不存在什么问题。但当数据量较大时，这种做法显然效率低下，对此不妨考虑采用矢量瓦片来解决问题。</p>
 <p>下面是一个简单的例子。使用<a href="http://github.com/mapbox/mapbox-gl-js" target="_blank" rel="external">Mapbox GL JS</a>可以在数秒内完成全美邮政边界的GeoJSON文件(106 MB)加载，该文件包含33,000多个Feature，涉及超过5,400,000个点。整个加载过程不需要依赖后台服务器，直接在浏览器中完成。</p>
+
 <a id="more"></a>
 <p>可以看到整个浏览体验是很平滑的，那么到底是如何实现的呢？</p>
 <h3 id="矢量瓦片"><a href="#矢量瓦片" class="headerlink" title="矢量瓦片"></a>矢量瓦片</h3><p>对于这么大的数据量，显然不可能对所有数据实现60 FPS的渲染，但实际上也没有必要这样做，因为：</p>
@@ -394,6 +401,7 @@
 <p>GeoJSON-VT正是按照上述步骤顺序来工作的：先投影，再简化，最后分割瓦片。这样在生成各层级瓦片时，可避免许多重复操作。</p>
 <p>那么第一步就是<strong>坐标投影</strong>，按照<a href="https://en.wikipedia.org/wiki/Web_Mercator" target="_blank" rel="external">Web Mercator</a>投影，将GeoJSON中的地理坐标投影至<code>[0..1,0..1]</code>范围。这样就可通过下面的公式得到屏幕坐标：<br><code>screen_x</code> = [<code>tile_size</code> × (2^zoom<code>x</code> - <code>tile_x</code>)]<br><code>screen_y</code> = [<code>tile_size</code> × (2^zoom<code>y</code> - <code>tile_y</code>)]</p>
 <p>第二步则是<strong>数据简化</strong>，以便减少瓦片中的细节数量。这里采用的是<a href="https://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm" target="_blank" rel="external">Ramer-Douglas-Peucker simplification algorithm</a>(某些地方称为RDP算法)，通过递归的方式查找一条折线中的重要点，舍弃不必要的细节。</p>
+<img src="/2017/12/18/geojson-vt/Ramer-Douglas-Peucker-simplification-algorithm.gif" title="Ramer Douglas Peucker简化算法">
 <p><a href="http://leafletjs.com/" target="_blank" rel="external">Leaflet</a>和<a href="https://github.com/mourner/simplify-js" target="_blank" rel="external">simplify-js</a>也是采用的该方法，但GeoJSON-VT并没有在查找完成后立即删除非必要点，而是给每个结点赋予了不同的权重，从而便于在不同层级上快速实现结点的包含或排除。</p>
 <p>第三步是<strong>计算面积和长度</strong>，根据每个多边形的面积和每条折线的长度为其赋予相应的权值，从而在特定层级上过滤掉过于微小的几何要素。</p>
 <p>最后一步，<strong>保存所有要素的包围盒</strong>，这样可以使分割操作更加高效。</p>
@@ -405,10 +413,12 @@
 </ol>
 <p>这样每级瓦片只需要分割其上一级瓦片中的要素即可，但这里还可以进一步优化。</p>
 <p>最常用的多边形分割算法<a href="https://en.wikipedia.org/wiki/Sutherland%E2%80%93Hodgman_algorithm" target="_blank" rel="external">Sutherland-Hodgeman</a>，如下图所示：</p>
+<img src="/2017/12/18/geojson-vt/Sutherland-Hodgeman.png" title="Sutherland Hodgeman算法">
 <p>为了分割上一级瓦片，要用到图中红色轴平行线组成的4个半平面。而每一条轴平行线，都需要遍历上一次分割的所有点。</p>
 <p>值得注意的是，每一张分割的瓦片并不正好是上一级瓦片的1/4，因为每张瓦片都需要保留一小块缓冲区解决渲染问题（比如Mapbox Studio Classic对每张512 pix瓦片在每个方向默认保存8 pix的缓冲区）。</p>
 <p>假设上一级瓦片中包含<code>n</code>个要素，那么分割4张瓦片的耗时大约是：<br>4 × (<code>n</code> + 1/2<code>n</code> + 1/4<code>n</code> + 1/4<code>n</code>) = 8<code>n</code></p>
 <p>那么这里Vladimir Agafonkin对半平面分割算法做了<a href="https://github.com/mapbox/geojson-vt/blob/master/src/clip.js" target="_blank" rel="external">简单的修改</a>，使得两条轴平行线之间的分割一次性完成：分割“条带”。这样就可以先利用垂直方向的条带将上一级瓦片分割为两部分，然后再利用水平方向的条带将子瓦片分割出来。</p>
+<img src="/2017/12/18/geojson-vt/modified-half-plane-clipping-algorithm.png" title="改进半平面分割算法">
 <p>这样耗时就会变成：<br><code>n</code> + <code>n</code> + 4 × 1/2<code>n</code> = 4<code>n</code></p>
 <p>于是相比原先的分割过程，效率变为2倍。</p>
 <p>最后，在预处理阶段保存的<strong>要素包围盒</strong>也能派上用场了。在较低层级上，如果要素包围盒在当前瓦片内，则完全保留，否则直接跳过。这样就无需再对每个点的权重进行遍历了，整个处理过程又将进一步加快。</p>
@@ -428,8 +438,10 @@
 <li>当瓦片完全处于某多边形内部的时候，则不再进行分割，因为不论层级再如何变化，父瓦片与子瓦片均完全一致，没有区别。</li>
 </ol>
 <h3 id="调试与性能分析"><a href="#调试与性能分析" class="headerlink" title="调试与性能分析"></a>调试与性能分析</h3><p>为便于调试和优化GeoJSON-VT，作者写了一个<a href="http://mapbox.github.io/geojson-vt/debug/" target="_blank" rel="external">调试页面</a>，将GeoJSON文件拖拽至页面，GeoJSON-VT便将开始处理：</p>
+<img src="/2017/12/18/geojson-vt/debug.gif" title="GeoJSON-VT调试页面">
 <p>该API库还提供了带有2个日志级别的<code>debug</code>选项，配置后会进行性能计时和日志记录。上图展示的是Level 1记录，Level 2会输出每个分割瓦片的信息，从而帮助追踪性能瓶颈和代码可能存在的问题。</p>
 <h3 id="平滑渲染"><a href="#平滑渲染" class="headerlink" title="平滑渲染"></a>平滑渲染</h3><p>尽管GeoJSON-VT已经很快了，加载和处理大规模GeoJSON数据依然会消耗很长的CPU时间。通常浏览器会在同一个线程中处理UI更新和用户交互，于是当JavaScript进行重负荷计算时，页面会冻结，不再接受用户输入。为了避免数据载入与处理导致的延迟和冻结，Mapbox GL JS调用了<a href="https://en.wikipedia.org/wiki/Web_worker" target="_blank" rel="external">Web Workers</a>，允许后台执行计算密集的任务而不干扰主线程。</p>
+<img src="/2017/12/18/geojson-vt/web-worker.png" title="使用Web Worker后台运行计算部分代码">
 <p>另外还有一个问题，就是web worker与主线程之间的数据交换，通常会涉及内存数据的复制，也会导致主线程冻结。为了避免该瓶颈，Mapbox GL JS利用了HTML5的特性——<a href="https://developers.google.com/web/updates/2011/12/Transferable-Objects-Lightning-Fast" target="_blank" rel="external">Transferable Objects</a>。如果将数据组织为typed arrays，就可以“零复制”实现线程间数据的瞬间交换。上述两个方式使得Mapbox GL JS实现了大规模矢量瓦片的平滑渲染。</p>
 <h3 id="使用GeoJSON-VT"><a href="#使用GeoJSON-VT" class="headerlink" title="使用GeoJSON-VT"></a>使用GeoJSON-VT</h3><p>如果使用的是基于Mapbox GL JS的工具（包括<a href="https://github.com/mapbox/mapbox-gl-js" target="_blank" rel="external">GL JS</a>或<a href="https://www.mapbox.com/mobile/" target="_blank" rel="external">Mapbox Mobile</a>），那么实际上就已经在用GeoJSON-VT了。</p>
 <p>当然，对于其他应用，也可以手动借助API进行使用：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tileIndex = geojsonvt(data);</div><div class="line">...</div><div class="line"><span class="keyword">var</span> tile = tileIndex.getTile(z, x, y);</div></pre></td></tr></table></figure></p>
